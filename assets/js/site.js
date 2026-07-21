@@ -1,6 +1,33 @@
 (() => {
+	const siteHeader = document.querySelector(".site-header");
 	const navToggle = document.querySelector(".nav-toggle");
 	const siteNav = document.querySelector(".site-nav");
+
+	if (siteHeader) {
+		let isHeaderCompact = window.scrollY > 140;
+		let headerUpdateQueued = false;
+
+		const updateHeader = () => {
+			const scrollPosition = window.scrollY;
+
+			if (!isHeaderCompact && scrollPosition > 140) {
+				isHeaderCompact = true;
+			} else if (isHeaderCompact && scrollPosition < 40) {
+				isHeaderCompact = false;
+			}
+
+			siteHeader.classList.toggle("is-scrolled", isHeaderCompact);
+			headerUpdateQueued = false;
+		};
+
+		updateHeader();
+		window.addEventListener("scroll", () => {
+			if (!headerUpdateQueued) {
+				headerUpdateQueued = true;
+				window.requestAnimationFrame(updateHeader);
+			}
+		}, { passive: true });
+	}
 
 	if (navToggle && siteNav) {
 		navToggle.addEventListener("click", () => {

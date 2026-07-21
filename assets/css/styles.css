@@ -11,6 +11,19 @@
 	--shadow: 0 18px 45px rgba(7, 27, 58, 0.12);
 	--radius: 18px;
 	--content: 1180px;
+	--font-display: "Aptos Display", Aptos, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+::view-transition-old(root) {
+	animation: 160ms ease both page-fade-out;
+}
+
+::view-transition-new(root) {
+	animation: 280ms ease both page-fade-in;
 }
 
 *,
@@ -91,18 +104,19 @@ h2,
 h3 {
 	margin-top: 0;
 	color: var(--navy);
-	font-family: Georgia, "Times New Roman", serif;
-	line-height: 1.12;
+	font-family: var(--font-display);
+	font-weight: 720;
+	line-height: 1.16;
 }
 
 h1 {
-	font-size: clamp(2.7rem, 7vw, 5.5rem);
-	letter-spacing: -0.045em;
+	font-size: clamp(2.35rem, 5.6vw, 4.4rem);
+	letter-spacing: -0.035em;
 }
 
 h2 {
-	font-size: clamp(2rem, 4vw, 3.35rem);
-	letter-spacing: -0.03em;
+	font-size: clamp(1.75rem, 3.2vw, 2.7rem);
+	letter-spacing: -0.025em;
 }
 
 h3 {
@@ -114,10 +128,18 @@ p {
 }
 
 .site-header {
-	position: relative;
-	z-index: 20;
+	position: sticky;
+	top: 0;
+	z-index: 100;
 	border-bottom: 1px solid var(--line);
 	background: rgba(255, 255, 255, 0.96);
+	box-shadow: 0 4px 18px rgba(7, 27, 58, 0);
+	transition: box-shadow 180ms ease;
+	view-transition-name: site-header;
+}
+
+.site-header.is-scrolled {
+	box-shadow: 0 4px 18px rgba(7, 27, 58, 0.11);
 }
 
 .topbar {
@@ -145,6 +167,7 @@ p {
 	justify-content: space-between;
 	gap: 2rem;
 	min-height: 94px;
+	transition: min-height 180ms ease;
 }
 
 .brand {
@@ -154,6 +177,15 @@ p {
 .brand img {
 	width: min(100%, 390px);
 	height: auto;
+	transition: width 180ms ease;
+}
+
+.site-header.is-scrolled .header-main {
+	min-height: 76px;
+}
+
+.site-header.is-scrolled .brand img {
+	width: min(100%, 330px);
 }
 
 .nav-toggle {
@@ -375,10 +407,21 @@ p {
 	box-shadow: 0 22px 55px rgba(7, 27, 58, 0.17);
 }
 
-.service-card img {
+.service-card-media {
+	display: grid;
+	place-items: center;
+	aspect-ratio: 5 / 4;
+	padding: clamp(0.65rem, 1.5vw, 1rem);
+	border-bottom: 1px solid var(--line);
+	background: var(--mist);
+	overflow: hidden;
+}
+
+.service-card-media img {
 	width: 100%;
-	aspect-ratio: 16 / 10;
-	object-fit: cover;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
 }
 
 .service-card-body {
@@ -462,7 +505,7 @@ p {
 
 .page-hero h1 {
 	margin-bottom: 0.6rem;
-	font-size: clamp(2.8rem, 7vw, 5rem);
+	font-size: clamp(2.35rem, 5.4vw, 4.25rem);
 }
 
 .page-hero p {
@@ -615,24 +658,29 @@ p {
 
 .staff-grid {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 1.25rem;
 }
 
 .staff-card {
-	overflow: hidden;
+	display: grid;
+	grid-template-columns: 127px minmax(0, 1fr);
+	gap: 1.35rem;
+	align-items: start;
+	padding: 1.35rem;
 }
 
 .staff-card img {
-	width: 100%;
-	height: 320px;
+	width: 127px;
+	height: 175px;
+	border-radius: 12px;
 	object-fit: cover;
 	object-position: center top;
 	background: var(--mist);
 }
 
 .staff-card-content {
-	padding: 1.35rem;
+	padding-top: 0.15rem;
 }
 
 .staff-card h2 {
@@ -696,11 +744,12 @@ p {
 	min-height: 100%;
 }
 
-.map-card img {
+.map-card iframe {
+	display: block;
 	width: 100%;
 	height: 100%;
 	min-height: 430px;
-	object-fit: cover;
+	border: 0;
 }
 
 .site-footer {
@@ -711,13 +760,13 @@ p {
 
 .footer-grid {
 	display: grid;
-	grid-template-columns: 1.3fr 0.7fr 0.7fr;
-	gap: 3rem;
+	grid-template-columns: minmax(380px, 1.4fr) repeat(2, minmax(140px, 0.6fr));
+	gap: clamp(1.5rem, 4vw, 3rem);
 	padding-bottom: 3rem;
 }
 
 .footer-logo {
-	width: min(100%, 330px);
+	width: min(100%, 460px);
 	margin-bottom: 1.25rem;
 	padding: 0.75rem;
 	border-radius: 8px;
@@ -783,9 +832,6 @@ p {
 		padding: 0.75rem;
 	}
 
-	.staff-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
 }
 
 @media (max-width: 760px) {
@@ -816,7 +862,8 @@ p {
 	.news-card,
 	.content-grid,
 	.project-intro,
-	.contact-grid {
+	.contact-grid,
+	.staff-grid {
 		grid-template-columns: 1fr;
 	}
 
@@ -850,7 +897,6 @@ p {
 
 	.service-grid,
 	.gallery,
-	.staff-grid,
 	.footer-grid {
 		grid-template-columns: 1fr;
 	}
@@ -864,8 +910,15 @@ p {
 		min-height: 240px;
 	}
 
+	.staff-card {
+		grid-template-columns: 110px minmax(0, 1fr);
+		gap: 1rem;
+		padding: 1rem;
+	}
+
 	.staff-card img {
-		height: 370px;
+		width: 110px;
+		height: auto;
 	}
 }
 
@@ -877,5 +930,19 @@ p {
 		transition-duration: 0.01ms !important;
 		animation-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
+	}
+}
+
+@keyframes page-fade-out {
+	to {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+}
+
+@keyframes page-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
 	}
 }
