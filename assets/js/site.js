@@ -81,21 +81,47 @@
 	const lightbox = document.querySelector(".lightbox");
 	const lightboxImage = lightbox?.querySelector("img");
 	const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]");
+	const lightboxCount = lightbox?.querySelector("[data-lightbox-count]");
 	const lightboxClose = lightbox?.querySelector(".lightbox-close");
+	const lightboxPrevious = lightbox?.querySelector(".lightbox-previous");
+	const lightboxNext = lightbox?.querySelector(".lightbox-next");
+	const galleryItems = [...document.querySelectorAll(".gallery-item")];
 
 	if (lightbox && lightboxImage && lightboxCaption) {
-		document.querySelectorAll(".gallery-item").forEach((item) => {
+		let activeProject = 0;
+
+		const showProject = (index) => {
+			activeProject = (index + galleryItems.length) % galleryItems.length;
+			const item = galleryItems[activeProject];
+			const image = item.querySelector("img");
+			const caption = item.querySelector("span")?.textContent || "Project image";
+
+			lightboxImage.src = image.src;
+			lightboxImage.alt = caption;
+			lightboxCaption.textContent = caption;
+			if (lightboxCount) lightboxCount.textContent = `${activeProject + 1} / ${galleryItems.length}`;
+		};
+
+		galleryItems.forEach((item, index) => {
 			item.addEventListener("click", () => {
-				const image = item.querySelector("img");
-				const caption = item.querySelector("span")?.textContent || "Project image";
-				lightboxImage.src = image.src;
-				lightboxImage.alt = caption;
-				lightboxCaption.textContent = caption;
+				showProject(index);
 				lightbox.showModal();
 			});
 		});
 
 		lightboxClose?.addEventListener("click", () => lightbox.close());
+		lightboxPrevious?.addEventListener("click", () => showProject(activeProject - 1));
+		lightboxNext?.addEventListener("click", () => showProject(activeProject + 1));
+		lightbox.addEventListener("keydown", (event) => {
+			if (event.key === "ArrowLeft") {
+				event.preventDefault();
+				showProject(activeProject - 1);
+			}
+			if (event.key === "ArrowRight") {
+				event.preventDefault();
+				showProject(activeProject + 1);
+			}
+		});
 		lightbox.addEventListener("click", (event) => {
 			if (event.target === lightbox) lightbox.close();
 		});
