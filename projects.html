@@ -29,7 +29,15 @@
 			<button class="gallery-item" type="button"><img src="assets/images/projects/project-19.jpg" alt="Rodney Street Improvements in Cape Girardeau, Missouri" loading="lazy"><span>Rodney Street Improvements - Cape Girardeau, Mo</span></button>
 			<button class="gallery-item" type="button"><img src="assets/images/projects/project-20.jpg" alt="Veterans Memorial Drive in Cape Girardeau, Missouri" loading="lazy"><span>Veterans Memorial Drive - Cape Girardeau, Mo</span></button>
 		</div></div></section>
-		<dialog class="lightbox" aria-label="Project image"><img src="assets/images/projects/project-01.jpg" alt=""><div class="lightbox-bar"><span data-lightbox-caption>Project image</span><button class="lightbox-close" type="button">Close</button></div></dialog>
+		<dialog class="lightbox" aria-labelledby="lightbox-caption">
+			<div class="lightbox-stage">
+				<img src="assets/images/projects/project-01.jpg" alt="" draggable="false">
+				<button class="lightbox-close" type="button" aria-label="Close image viewer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+				<button class="lightbox-arrow lightbox-previous" type="button" aria-label="View previous project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+				<button class="lightbox-arrow lightbox-next" type="button" aria-label="View next project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+				<div class="lightbox-bar"><span id="lightbox-caption" data-lightbox-caption>Project image</span><span class="lightbox-count" data-lightbox-count aria-live="polite"></span></div>
+			</div>
+		</dialog>
 	</main>
 	<section class="cta" aria-label="Contact Bowen"><div class="container"><div><h2>Have a project in mind?</h2><p>Let’s discuss the scope and next steps.</p></div><a class="button button-light" href="contact.html">Contact us</a></div></section>
 	<footer class="site-footer"><div class="container footer-grid"><div><img class="footer-logo" src="assets/images/logo.png" alt="Bowen Engineering &amp; Surveying" width="585" height="125"><p>Civil engineering, surveying, and testing services since 1979.</p></div><div><h2>Explore</h2><ul><li><a href="engineering.html">Engineering</a></li><li><a href="surveying.html">Surveying</a></li><li><a href="testing.html">Testing</a></li><li><a href="projects.html">Projects</a></li><li><a href="staff.html">Staff</a></li></ul></div><div><h2>Contact</h2><ul><li><a href="tel:+15733395900">573-339-5900</a></li><li>2121 Megan Drive</li><li>Cape Girardeau, MO 63701</li><li><a href="contact.html">Contact information</a></li></ul></div></div><div class="container footer-bottom"><p>&copy; <span data-current-year>2026</span> Bowen Engineering &amp; Surveying. All rights reserved.</p></div></footer>
