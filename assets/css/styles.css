@@ -366,7 +366,6 @@ p {
 }
 
 .stat-card,
-.news-card,
 .service-card,
 .content-card,
 .contact-card,
@@ -436,34 +435,6 @@ p {
 	font-weight: 800;
 }
 
-.news-card {
-	display: grid;
-	grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
-	overflow: hidden;
-}
-
-.news-card img {
-	width: 100%;
-	height: 100%;
-	min-height: 340px;
-	object-fit: cover;
-}
-
-.news-card-content {
-	padding: clamp(1.8rem, 5vw, 3.5rem);
-}
-
-.date {
-	display: inline-flex;
-	margin-bottom: 1rem;
-	padding: 0.28rem 0.65rem;
-	border-radius: 999px;
-	color: var(--blue);
-	background: #e8eefb;
-	font-size: 0.82rem;
-	font-weight: 800;
-}
-
 .cta {
 	color: var(--white);
 	background: var(--blue);
@@ -520,7 +491,6 @@ p {
 .page-hero-testing { background-image: url("../images/home/slide-4.jpg"); }
 .page-hero-projects { background-image: url("../images/home/slide-5.jpg"); }
 .page-hero-staff { background-image: url("../images/home/slide-1.jpg"); }
-.page-hero-news { background-image: url("../images/news/now-hiring.jpg"); background-position: center 44%; }
 .page-hero-contact { background-image: url("../images/home/slide-1.jpg"); }
 
 .content-grid {
@@ -743,7 +713,7 @@ p {
 	display: grid;
 	grid-template-columns: 127px minmax(0, 1fr);
 	gap: 1.35rem;
-	align-items: start;
+	align-items: center;
 	padding: 1.35rem;
 }
 
@@ -757,7 +727,7 @@ p {
 }
 
 .staff-card-content {
-	padding-top: 0.15rem;
+	padding: 0.2rem 0;
 }
 
 .staff-card h2 {
@@ -766,18 +736,9 @@ p {
 }
 
 .staff-title {
-	margin-bottom: 0.8rem;
+	margin-bottom: 0;
 	color: var(--red);
 	font-weight: 800;
-}
-
-.staff-card a {
-	overflow-wrap: anywhere;
-}
-
-.staff-links {
-	display: grid;
-	gap: 0.35rem;
 }
 
 .contact-grid {
@@ -936,7 +897,6 @@ p {
 	}
 
 	.split,
-	.news-card,
 	.content-grid,
 	.project-intro,
 	.contact-grid,
@@ -947,10 +907,6 @@ p {
 	.service-grid,
 	.gallery {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.news-card img {
-		min-height: 280px;
 	}
 
 	.cta .container {

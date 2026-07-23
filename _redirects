@@ -1,0 +1,16 @@
+# Legacy Bowen Engineering & Surveying PHP URLs
+# Permanent redirects consolidate old search results and backlinks on the
+# current extensionless canonical URLs.
+
+/index.php / 301
+/engineering.php /engineering 301
+/surveying.php /surveying 301
+/testing.php /testing 301
+/project.php /projects 301
+/staff.php /staff 301
+/contact-us.php /contact 301
+
+# Legacy pages without a direct replacement
+/readmore.php / 301
+/news.php / 301
+/news-details.php / 301
