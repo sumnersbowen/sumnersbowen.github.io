@@ -47,6 +47,61 @@
 		element.textContent = new Date().getFullYear();
 	});
 
+	const contactForm = document.querySelector("[data-contact-form]");
+	const contactFormStatus = contactForm?.querySelector("[data-form-status]");
+	const contactSubmit = contactForm?.querySelector(".contact-submit");
+
+	if (contactForm && contactFormStatus && contactSubmit) {
+		const showFormStatus = (message, type) => {
+			contactFormStatus.textContent = message;
+			contactFormStatus.classList.remove("is-success", "is-error");
+			contactFormStatus.classList.add(`is-${type}`);
+			contactFormStatus.hidden = false;
+			contactFormStatus.focus();
+		};
+
+		contactForm.addEventListener("submit", async (event) => {
+			event.preventDefault();
+			const formData = new FormData(contactForm);
+
+			if (!formData.get("cf-turnstile-response")) {
+				showFormStatus("Please complete the verification before sending your inquiry.", "error");
+				return;
+			}
+
+			contactSubmit.disabled = true;
+			contactSubmit.textContent = "Sending...";
+			contactForm.setAttribute("aria-busy", "true");
+			contactFormStatus.hidden = true;
+
+			try {
+				const response = await fetch(contactForm.action, {
+					method: "POST",
+					body: formData,
+					headers: {
+						"Accept": "application/json"
+					}
+				});
+				const result = await response.json().catch(() => ({}));
+
+				if (!response.ok) {
+					throw new Error(result.message || "We could not send your inquiry. Please try again.");
+				}
+
+				contactForm.reset();
+				window.turnstile?.reset();
+				showFormStatus("Thank you. Your project inquiry has been sent to our team.", "success");
+			} catch (error) {
+				window.turnstile?.reset();
+				showFormStatus(error.message || "We could not send your inquiry. Please try again or call (573) 339-5900.", "error");
+			} finally {
+				contactSubmit.disabled = false;
+				contactSubmit.textContent = "Send project inquiry";
+				contactForm.removeAttribute("aria-busy");
+			}
+		});
+	}
+
 	const slides = [...document.querySelectorAll(".hero-slide")];
 	const dots = [...document.querySelectorAll(".slider-dot")];
 	let activeSlide = 0;
